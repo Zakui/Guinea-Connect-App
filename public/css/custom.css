@@ -9,6 +9,7 @@
 body {
     font-family: "Lato",sans-serif;
 }
+
 .logo{
     -webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.16);
     -moz-box-shadow: 0 3px 10px rgba(0,0,0,0.16);
@@ -197,7 +198,7 @@ button{
     color: #FBF9F9;
     border-color:transparent;
 }
-.select{
+.colectivity-selected>.select{
     position:absolute;
     font-size:8px;
     top:0;
