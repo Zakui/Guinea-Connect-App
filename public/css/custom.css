@@ -1,0 +1,240 @@
+/*!
+ * Start Bootstrap - SB Admin (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+/* Global Styles */
+
+body {
+    font-family: "Lato",sans-serif;
+}
+.logo{
+    -webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.16);
+    -moz-box-shadow: 0 3px 10px rgba(0,0,0,0.16);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.16);
+    z-index: 230000;
+    height: 64px;
+    padding-top: 6px;
+    padding-left: 10px;
+}
+.sidebar-nav{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 256px;
+    position: fixed;
+    z-index: 13000;
+    left: 0;
+    top: 0;
+    transform: translate3d(0px, 0, 0);
+    overflow: hidden;
+    background-color: #3e4eb8;
+}
+.body-nav{
+    max-width: 1024px;
+    min-width: 300px;
+    position: fixed;
+    right: 0;
+    float: right;
+}
+.scroll-div{
+    position: fixed;
+    max-height: 700px;
+    overflow-y: scroll;
+    left: 290px;
+    padding-right: 20px;
+    z-index: -1;
+    bottom: 10px;
+    top: 60px;
+}
+.navigation{
+    background-color: #313e93;
+    height: 64px;
+    padding-top: 15px;
+}
+.liens{
+    background-color: #273175;
+    z-index: 230000;
+}
+.header-nav{
+    margin: 0;;
+    padding: 0;
+    padding-top:15px;
+    text-align: center;
+    color: whitesmoke;
+    background-color: #273175;
+    height: 44px;
+    width: 256px;
+}
+.structure-nav{
+    color: whitesmoke;
+}
+hr{
+    margin: 0;
+}
+.deconnexion{
+    background-color: rgb(39, 49, 117);
+    color: whitesmoke;
+    padding-bottom: 25px;
+    padding-left: 25px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 65px;
+    width: 256px;
+}
+.deconnexion a:link,
+.deconnexion a:hover,
+.deconnexion a:visited{
+    color: whitesmoke;
+}
+
+.local-name{
+    width: 30%;
+    color: rgb(251, 249, 249);
+    font-size: 24px;
+    white-space: nowrap;
+    padding: 0px 32px;
+}
+.element-save{
+    background-color: #F7F7F7;
+    box-sizing: border-box;
+    font-family: Lato, sans-serif;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.12);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #A6A6A6;
+    padding: 8px 0px 8px 16px;
+    margin: 16px;
+}
+.element-active{
+    background-color: #F7F7F7;
+    box-sizing: border-box;
+    font-family: Lato, sans-serif;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    box-shadow: 0 1px 6px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.12);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid rgb(62, 78, 184);
+    padding: 8px 0px 8px 16px;
+    margin: 16px;
+}
+button{
+    border: 10px; 
+    background: none rgba(0, 0, 0, 0); 
+    box-sizing: border-box; 
+    display: inline-block;
+    font-family: Lato, sans-serif; 
+    cursor: pointer; 
+    outline: none; 
+    color: rgb(74, 144, 226);
+    font-size: 14px; 
+    letter-spacing: 0px; 
+    text-transform: uppercase; 
+    font-weight: 500; 
+    border-radius: 2px; 
+    position: relative; 
+    overflow: hidden; 
+    line-height: 36px; 
+    min-width: 88px; 
+    padding: 0px; 
+    margin: 2px; 
+}
+.element-save div,
+.element-active div{
+    padding: 5px;
+    display: inline-block;
+}
+.document-save{
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: rgb(48, 212, 138);
+}
+.document-active{
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.document{
+    margin-left: 370px;
+}
+.document-active span{
+    position: relative;
+    font-size: 8px;
+    display: inline-block;
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    color: #FF9C15;
+    padding-right: 8px;
+}
+.panel-heading .chevron:after {
+    content: "\f0d7";   
+}
+.panel-heading.collapsed .chevron:after {
+    content: "\f0da"; 
+} 
+.panel-default{
+    cursor: pointer;
+    background-color: #273175;
+    color: #FBF9F9;
+    border-color:transparent;
+}
+.panel-default>.panel-heading{
+    margin-left: 0;
+    padding-left: 48px;
+    padding-right: 16px;
+    padding-bottom: 8px;
+    padding-top: 15px;
+    position: relative;
+    font-size: 16px;
+    font-family: Lato, sans-serif;
+    background-color: #273175;
+    color: #FBF9F9;
+    border-color:transparent;
+}
+.select{
+    position:absolute;
+    font-size:8px;
+    top:0;
+    margin:12px;
+    color:#00BC9E;
+    fill:#757575;
+    left:40px;
+}
+.colectivity-selected{
+    display: inline-block;
+    border: 10px;
+    padding-left: 78px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+    font-family: Lato, sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    background-color: #273175;
+    color: #00BC9E;
+    font-size: 14px;
+    line-height: 14px;
+    position: relative;
+}
+.colectivity{
+    display: inline-block;
+    border: 10px;
+    padding-left: 78px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+    font-family: Lato, sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    background-color: #273175;
+    color: rgb(195, 195, 195);
+    font-size: 14px;
+    line-height: 14px;
+    position: relative;
+}

@@ -1,0 +1,65 @@
+[{"group_zj6ju63/group_og8mr90/Nom_2": "BAH", "group_zj6ju63/group_uz0tx96/group_nf1ap01/_1_A": "1", "group_zj6ju63/group_og8mr90/group_ng6ko78/Nombre_de_grossesse": "0", 
+"_xform_id_string": "hospital_form", 
+
+"meta/instanceID": "uuid:1d16c0c6-ec21-4100-9d5a-06b1510d80cb", "group_zj6ju63/group_uz0tx96/METHODE_PRESCRITE_SI_DIU_comp": "MMN", "group_zj6ju63/group_og8mr90/Etat_Matrimonial": "mari_e", 
+"end": "2016-10-20T14:24:58.000-00:00", 
+"group_zj6ju63/group_og8mr90/Occupation": "Managere", "group_zj6ju63/group_uz0tx96/group_nf1ap01/Poids": "35", 
+"start": "2016-10-20T14:17:08.000-00:00", "group_zj6ju63/group_uz0tx96/group_nf1ap01/Quantit": "2", "group_zj6ju63/group_og8mr90/Date_des_derni_res_r_gles": "2016-09-28", "group_zj6ju63/group_uz0tx96/group_nf1ap01/Date_de_visite": "2016-10-20", "group_zj6ju63/group_uz0tx96/Position_de_l_ut_rus": "POS", "group_zj6ju63/group_uz0tx96/group_nf1ap01/Date_du_rendez_vous": "2016-10-31", "group_zj6ju63/group_og8mr90/Prenom_2": "CIRE", "group_zj6ju63/group_og8mr90/group_ng6ko78/Nbre_Enfants_Vivants": "0", "group_zj6ju63/group_og8mr90/group_yf5hp24/A_l_Examen": "non", "group_zj6ju63/group_og8mr90/N_de_client": "23457809", 
+"group_main/Type_de_Fiche": "fiche_consultation_planning_fa", "group_zj6ju63/group_uz0tx96/group_nf1ap01/M_thode_prescrite": "MMN", "group_zj6ju63/group_og8mr90/group_yf5hp24/Ant_c_dents_001": "oui", "group_zj6ju63/group_uz0tx96/Insertion_faite_par": "sage_femme", 
+"formhub/uuid": "7a1e86e58b8d4e899b1b5455ff743e70", "group_zj6ju63/group_og8mr90/group_yf5hp24/Ant_c_dents": "oui", "group_zj6ju63/group_og8mr90/Village_3": "Tchankwe", "group_zj6ju63/group_og8mr90/group_ng6ko78/Nbre_Enfants_N_s_Vivants": "0", "group_zj6ju63/group_og8mr90/group_yf5hp24/Signes_rechercher_la_pr_mi": "r_gles_habituellement_abondant maux_de_t_l__fr_quent_et_impor pr_sence_d_une_masse_au_sein", "group_zj6ju63/group_og8mr90/group_yf5hp24/Ant_c_dents_005": "non", "group_zj6ju63/group_og8mr90/Profession_PF": "Boucher", "group_zj6ju63/group_uz0tx96/METHODE_DESIREE": "MMM", "group_zj6ju63/group_og8mr90/Age_001": "20", "group_zj6ju63/group_og8mr90/group_yf5hp24/A_l_Examen_005": "oui", 
+"group_main/Poste": "Djongassi", "group_zj6ju63/group_og8mr90/group_yf5hp24/A_l_Examen_001": "oui"}, {"group_ar3bw24/Sexe_enfant_1": "m", "group_ar3bw24/Sexe_enfant_2": "f", "group_ar3bw24/Heure": "14:30", 
+"group_ar3bw24/Mort_n": "0", 
+"group_ar3bw24/Profession_accouchement": "Commer\u00e7ant", 
+"group_ar3bw24/N_Vivant": "2", 
+"group_ar3bw24/Date_001": "2016-10-20", 
+"group_ar3bw24/Personne_responsable_001": "mari", 
+"group_ar3bw24/Poids_enfant_1": "15", 
+"group_main/Type_de_Fiche": "accouchement", 
+"group_ar3bw24/Poids_enfant_2": "20", 
+"group_ar3bw24/Prenom_1": "MAMADOU", 
+
+"meta/instanceID": "uuid:3cf1cbeb-81e8-464c-87b7-c1d3149a38d0", 
+"formhub/uuid": "7a1e86e58b8d4e899b1b5455ff743e70", 
+"group_ar3bw24/Nom_1": "BAH", 
+"end": "2016-10-20T14:17:08.000-00:00", 
+"group_ar3bw24/Village_2": "Djaga centre", 
+"group_ar3bw24/Nombre_de_naissance": "2", 
+"start": "2016-10-20T14:07:23.000-00:00", 
+"group_ar3bw24/Date_d_ace": "2016-10-20", 
+"_xform_id_string": "hospital_form", 
+"group_main/Poste": "Diaga"
+}, 
+
+
+{"group_cj5tm91/Village_1": "Diongassi centre", "group_cj5tm91/group_nk9tv48/group_fp0fa49/Type_medicament_3": "comprim", "group_cj5tm91/Refere": "non", 
+"group_cj5tm91/Age": "36", 
+"_xform_id_string": "hospital_form", 
+"group_cj5tm91/Date": "2016-09-02", 
+"group_cj5tm91/Nom": "BAH", 
+"group_cj5tm91/Diagnostic": "I.R.A._3_semaines_6 Paludisme_simple_15", "group_cj5tm91/group_nk9tv48/group_fp0fa49/Quantite_3": "10", "group_cj5tm91/group_nk9tv48/Quantite_1": "24", 
+"meta/instanceID": "uuid:8c6e0992-17a2-439a-b837-630d694b48af", "group_cj5tm91/group_symptome_general/Plainte_Symptomes_musculo_squelettique": "Douleur_articulaire", 
+"group_cj5tm91/en": "ans", 
+"end": "2016-09-02T11:31:19.000-00:00", "group_cj5tm91/group_symptome_general/Plainte_Symptomes_Gastrointestinal": "constipation Douleur_d_estomac", 
+"group_cj5tm91/group_nk9tv48/group_lb3mc19/Quantite_4": "1", 
+"group_cj5tm91/Sexe": "F", 
+"start": "2016-09-02T11:03:33.000-00:00", 
+"group_cj5tm91/type_contact": "premier", "group_cj5tm91/group_nk9tv48/group_kt09j36/Quantite_5": "1", "group_cj5tm91/group_Description_clinique/RESP": "19", "group_cj5tm91/group_Description_clinique/Pouls": "98", "group_cj5tm91/group_nk9tv48/group_kt09j36/Type_medicament_5": "pompe", "group_cj5tm91/Profession_du_patient": "El\u00e8ve", "group_cj5tm91/group_symptome_general/Plainte_Symptomes_General": "La_fievre Le_maux_de_tete", 
+"group_cj5tm91/telephone_patient": "628956652", 
+"group_main/Type_de_Fiche": "registre_de_consultation", "group_cj5tm91/group_nk9tv48/Medicaments_1": "artemether_lum", 
+"group_cj5tm91/Prenom": "SORY", "group_cj5tm91/group_nk9tv48/group_xu33g78/Medicaments_2": "amoxicylline_5", "group_cj5tm91/group_Description_clinique/o2": "94", 
+"formhub/uuid": "7a1e86e58b8d4e899b1b5455ff743e70", "group_cj5tm91/group_nk9tv48/group_lb3mc19/Medicaments_4": "albendazole_40", "group_cj5tm91/group_nk9tv48/group_lb3mc19/Type_medicament_4": "comprim", "group_cj5tm91/group_Description_clinique/Temperature": "38", "group_cj5tm91/group_Description_clinique/TA_2": "7", "group_cj5tm91/group_nk9tv48/group_kt09j36/Medicaments_5": "ringer_lactate", "group_cj5tm91/Nbre_de_medicament": "5", "group_cj5tm91/group_symptome_general/Plainte_Symptomes_Genito_Urinaire": "Douleur_Pendant_la_miction_ou_Mictalgie Pollyurie Pollakyurie_ou_Difficult\u00e9_\u00e0_uriner", "group_cj5tm91/group_Description_clinique/Poids": "65", "group_cj5tm91/group_nk9tv48/group_fp0fa49/Medicaments_3": "paracetamol_50", "group_cj5tm91/group_nk9tv48/group_xu33g78/Type_medicament_2": "comprim", "group_cj5tm91/group_nk9tv48/Type_medicament_1": "comprim", 
+"group_cj5tm91/labo": "TDR_+ TG_+", 
+"group_main/Poste": "Djongassi", 
+"group_cj5tm91/group_nk9tv48/group_xu33g78/Quantite_2": "20", "group_cj5tm91/group_symptome_general/Plainte_Symptomes_Respiratoire": "La_toux", "group_cj5tm91/group_Description_clinique/TA_1": "11"
+}, 
+
+
+{
+    "end": "2016-09-02T11:05:26.000-00:00", 
+    "start": "2016-09-02T11:03:38.000-00:00", 
+    "_xform_id_string": "hospital_form", 
+    "group_main/Poste": "H\u00f4r\u00e8 Wouri", 
+    "meta/instanceID": "uuid:cf967ad0-27e0-48af-8caf-3a4b5111bb8f", 
+    "formhub/uuid": "7a1e86e58b8d4e899b1b5455ff743e70"
+}
+]
