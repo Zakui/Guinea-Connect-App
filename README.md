@@ -2,17 +2,17 @@
 this is the replicate app of https://github.com/eHealthAfrica/guinea-connect-universal-app
 
 
-<h1>Get started</h1>
+### Get started
 to start working on this project your need to clone this repo and run <code>npm install</code>
-<h3>Clone the project</h3>
-<code>
+## Clone the project
+```bash
 git clone https://github.com/Zakui/Guinea-Connect-App.git <br>
 cd Guinea-Connect-App <br>
 npm install
-</code>
+```
 
-<h3>Run the App</h3>
-<code>
+## Run the App
+```bash
  npm start
-</code>
-This command will run the app on <a href="localhost:4000">localhost:4000</a>
+```
+This command will run the app on http://localhost:4000
