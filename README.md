@@ -6,8 +6,8 @@ this is the replicate app of https://github.com/eHealthAfrica/guinea-connect-uni
 to start working on this project your need to clone this repo and run <code>npm install</code>
 ### Clone the project
 ```bash
-git clone https://github.com/Zakui/Guinea-Connect-App.git <br>
-cd Guinea-Connect-App <br>
+git clone https://github.com/Zakui/Guinea-Connect-App.git
+cd Guinea-Connect-App
 npm install
 ```
 
