@@ -69,7 +69,13 @@ body {
     width: 256px;
 }
 .structure-nav{
+    max-height: 320px;
     color: whitesmoke;
+    overflow: auto;
+}
+.structure-nav::-webkit-scrollbar {
+    width: 0px;  
+    background: transparent;  
 }
 hr{
     margin: 0;
