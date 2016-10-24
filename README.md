@@ -15,4 +15,4 @@ npm install
 ```bash
  npm start
 ```
-This command will run the app on https://localhost:4000
+This command will run the app on http://localhost:4000
