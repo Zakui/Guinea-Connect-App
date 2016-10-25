@@ -77,6 +77,14 @@ body {
     width: 0px;  
     background: transparent;  
 }
+.structure-nav::-moz-scrollbar {
+    width: 0px;  
+    background: transparent;  
+}
+.structure-nav::-o-scrollbar {
+    width: 0px;  
+    background: transparent;  
+}
 hr{
     margin: 0;
 }
@@ -186,12 +194,12 @@ button{
     content: "\f0da"; 
 } 
 .panel-default{
-    cursor: pointer;
     background-color: #273175;
     color: #FBF9F9;
     border-color:transparent;
 }
 .panel-default>.panel-heading{
+    cursor: pointer;
     margin-left: 0;
     padding-left: 48px;
     padding-right: 16px;
@@ -204,7 +212,7 @@ button{
     color: #FBF9F9;
     border-color:transparent;
 }
-.colectivity-selected>.select{
+.colectivity-selected>.fa{
     position:absolute;
     font-size:8px;
     top:0;
@@ -228,6 +236,7 @@ button{
     font-size: 14px;
     line-height: 14px;
     position: relative;
+    width: 256px;
 }
 .colectivity{
     display: inline-block;
@@ -244,4 +253,5 @@ button{
     font-size: 14px;
     line-height: 14px;
     position: relative;
+    width: 256px;
 }

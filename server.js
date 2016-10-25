@@ -4,7 +4,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
-var COMMENTS_FILE = path.join(__dirname,'hospital_form.json');
+var COMMENTS_FILE = path.join(__dirname,'data.json');
 
 app.set('port',(process.env.PORT || 4000));
 
@@ -25,6 +25,7 @@ app.get('/api/submitFiles',function(req,res){
             console.log(err);
             process.exit(1);
         }
+        console.log(res.json(JSON.parse(data)));
         res.json(JSON.parse(data));
     });
 });
