@@ -161,6 +161,9 @@ button{
     padding: 0px; 
     margin: 2px; 
 }
+.dates{
+    width: 100px;
+}
 .element-save div,
 .element-active div{
     padding: 5px;
