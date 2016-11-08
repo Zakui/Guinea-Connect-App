@@ -47,9 +47,10 @@
                     <hr/>
                     <div class="structure-nav">
                         <div class="panel panel-default">
-                            <div class="panel-heading" data-toggle="collapse" data-target="#collapseElement" aria-expanded"true"><i class="chevron fa" ></i> Timbi touni</div>
+                            <div class="panel-heading rapport" data-toggle="collapse" data-target="#collapseElement" aria-expanded="true"><i class="chevron fa" ></i> Timbi touni</div>
                             <div class="collapse in" id="collapseElement" aria-expanded="true">
-                                <div class="click colectivity-selected"><span class="fa fa-circle"></span> Péllel Bantan</div>
+                            <div class="click colectivity-selected"><span class="fa fa-circle"></span> Rapport Cumuler</div>
+                                <div class="click colectivity"><span class=""></span> Péllel Bantan</div>
                                 <div class="click colectivity"><span class=""></span> Timbi Tounni Centre</div>
                                 <div class="click colectivity"><span class=""></span> Diaga</div>
                                 <div class="click colectivity"><span class=""></span> Djongassi</div>
@@ -80,7 +81,7 @@
     <script type="text/javascript" src="js/App.js"></script>
     <script>
         $(document).ready(function(){
-            $("#test").load("php/body_content.php",{ "locality": 'Péllel Bantan' });
+            $("#test").load("php/body_content.php",{ "locality": 'Rapport Cumuler' });
         });
         $(".click").click(function(){
             $(".click").children("span").removeClass("fa");

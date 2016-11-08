@@ -14,7 +14,8 @@
         'Wansan' => 'Wansan',
         'Djongassi' => 'Djongassi',
         'Péllel Bantan' => 'Péllel_Bantan',
-        'Kothyou' => 'Kothyou'
+        'Kothyou' => 'Kothyou',
+        'Rapport Cumuler' => 'Globals'
         );
         $db_local = '';
         foreach ($nom_des_localites as $key=>$value) {
@@ -29,7 +30,11 @@
     <div class="navigation">
         <p class="local-name">
             <?php
-                echo $local_name;
+                if($db_local == 'Globals'){
+                    echo 'Récapitulatif et Synthèse de Toutes les Données de Timbi Tounni';
+                }else{
+                    echo $local_name;
+                }
             ?>
         </p>
     </div>
@@ -58,10 +63,15 @@
                 </div>
 
                 <?php
-                    $body_req = $bdd->prepare("SELECT * FROM localite WHERE localite_name LIKE :locality");
-                    $body_req->execute(array(
-                        'locality' => $db_local
-                    ));
+                    if($db_local == 'Globals'){
+                        $body_req = $bdd->prepare("SELECT * FROM synthese_mois");
+                        $body_req->execute();
+                    }else{
+                        $body_req = $bdd->prepare("SELECT * FROM localite WHERE localite_name LIKE :locality");
+                        $body_req->execute(array(
+                            'locality' => $db_local
+                        ));
+                    }
                     if($body_req->rowCount() > 0){
                         $rows = $body_req->fetchAll(PDO::FETCH_ASSOC);
                         foreach (array_reverse($rows) as $row){
@@ -69,7 +79,7 @@
                             <div class="element-save">
                                 <div class="dates" style="font-size:18px;">
                                 <?php
-                                   echo $row['Mois_localite'];
+                                    echo $row['Mois_localite'];
                                 ?>
                                 </div>
                                 <div class="document">

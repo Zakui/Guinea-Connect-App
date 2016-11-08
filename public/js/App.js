@@ -7,7 +7,7 @@ var common = {
     maladiesList : function(tranche){
         var dia = {};
         tranche.forEach(function(x) { dia[x] = dia[x] + 1 || 1; });
-        
+        //console.log(dia);
          var maladies = ['Tétanos_1','Coquéluche_2','Diphtérie_3','La_Diarrhée_non_sanglante_4','Helminthiase_5','I.R.A._3_semaines_6',
                          'I.R._3_semaines_7','asthme_8','Autres_maladies_respiratoires_chronique_9','La_malnutrition_10','Anémies_femme_en_grossesse_11',
                          'Anémies_autres_11','Drépanocytose_12','Goitre_13','Diabéte_Sucré_14','Paludisme_simple_15','Paludisme_grave_16','Ictères_17',
@@ -26,30 +26,38 @@ var common = {
                          'Saignements_Vaginaux','Syphilis','Varicelle','Vomissement'];
        
          var nb_maladies = {};
-
         for (var element in dia) {
             maladies.map(function(v){
-                if(v == element){
+                if(v == element){                    
                     nb_maladies[v] = dia[element];
                 }else{
-                    nb_maladies[v] = 0;
+                    if(!(nb_maladies[v])){
+                        nb_maladies[v] = 0;
+                    }
                 }
             });
         }
-
         nb_maladies = JSON.stringify(nb_maladies);
 
         return nb_maladies;
     },
     checkMedicament : function(data,name,qt){
-        data.map(function(val){
-            if(val['nom'] == name){
-                val['quantite'] += parseInt(qt);
+        if(name){
+            var found;
+            data.map(function(val){
+                    if(val['nom'] == name){
+                        val['quantite'] += parseInt(qt);
+                        found = true;
+                    }
+            });
+            if(found){
                 return false;
             }else{
-               return true;
+                return true;
             }
-        });
+        }else{
+            return false;
+        }
     },
     sGeneral : function(key,value){
         if(key['group_cj5tm91/group_symptome_general/Plainte_Symptomes_General']){
@@ -64,10 +72,10 @@ var common = {
               var valeurs = key['group_cj5tm91/Diagnostic'].split(' ');
               var palus_count = 0;
               valeurs.map(function(val){
+                  value.push(val);
                   if(val.indexOf('Paludisme') !== -1){
                       palus_count++;
                   }
-                 value.push(val);
               });
           }
           return palus_count;
@@ -83,13 +91,47 @@ var common = {
             sup_60_a = {}, 
             sumTotal = 0, 
             acc = 0,
-            medicaments = []
+            medicaments = [],
+            p;
             ;
+        inf_12_m.symptom_general = [];
+        inf_12_m.diagnostic = [];
+        inf_5_a.symptom_general = [];
+        inf_5_a.diagnostic = [];
+        inf_15_a.symptom_general = [];
+        inf_15_a.diagnostic = [];
+        inf_20_a.symptom_general = [];
+        inf_20_a.diagnostic = [];
+        inf_25_a.symptom_general = [];
+        inf_25_a.diagnostic = [];
+        inf_50_a.symptom_general = [];
+        inf_50_a.diagnostic = [];
+        inf_60_a.symptom_general = [];
+        inf_60_a.diagnostic = [];
+        sup_60_a.symptom_general = [];
+        sup_60_a.diagnostic = [];
+
+        // -------------------------------------------------
+        inf_12_m.tdr_suspect = 0;
+        inf_12_m.tdr_confirme = 0;
+        inf_5_a.tdr_suspect = 0;
+        inf_5_a.tdr_confirme = 0;
+        inf_15_a.tdr_suspect = 0;
+        inf_15_a.tdr_confirme = 0;
+        inf_25_a.tdr_suspect = 0;
+        inf_25_a.tdr_confirme = 0;
+        inf_50_a.tdr_suspect = 0;
+        inf_50_a.tdr_confirme = 0;
+        inf_60_a.tdr_suspect = 0;
+        inf_60_a.tdr_confirme = 0;
+        sup_60_a.tdr_suspect = 0;
+        sup_60_a.tdr_confirme = 0;
+
         data.map(function(key){
         if(key['group_main/Type_de_Fiche']==value){
             acc++;
             //console.log(medicaments.length);
-           if(medicaments.length >= 1){
+           if(medicaments.length >= 0){
                if(common.checkMedicament(medicaments,key['group_cj5tm91/group_nk9tv48/Medicaments_1'],key['group_cj5tm91/group_nk9tv48/Quantite_1'])){
                    medicaments.push({
                                  'nom' : key['group_cj5tm91/group_nk9tv48/Medicaments_1'],
@@ -133,7 +175,6 @@ var common = {
                                  'types' : key['group_cj5tm91/group_nk9tv48/Type_medicament_1']
                               });
 
-                              //console.log(key['group_cj5tm91/group_nk9tv48/Quantite_1']);
                }
            }
 
@@ -144,16 +185,11 @@ var common = {
                 inf_12_m.premier_contact = inf_12_m.premier_contact+1 || 1;
               }
               
-              inf_12_m.symptom_general = [];
-              inf_12_m.diagnostic = [];
               common.sGeneral(key,inf_12_m.symptom_general);
-              var p = 0;
+              
               p = common.diagnostic(key,inf_12_m.diagnostic);
 
               inf_12_m.palus_count = inf_12_m.palus_count + p | 0;
-
-              inf_12_m.tdr_suspect = 0;
-              inf_12_m.tdr_confirme = 0;
 
               if(key['group_cj5tm91/labo'] == 'TDR_+'){
                  inf_12_m.tdr_plus = inf_12_m.tdr_plus+1 || 1;
@@ -178,16 +214,11 @@ var common = {
                     inf_5_a.premier_contact = inf_5_a.premier_contact+1 || 1;
                   }
                   
-                    inf_5_a.symptom_general = [];
-                    inf_5_a.diagnostic = [];
                     common.sGeneral(key,inf_5_a.symptom_general);
-                    var p = 0;
+                    
                     p = common.diagnostic(key,inf_5_a.diagnostic);
 
                     inf_5_a.palus_count = inf_5_a.palus_count + p | 0;
-
-                    inf_5_a.tdr_suspect = 0;
-                    inf_5_a.tdr_confirme = 0;
 
                   if(key['group_cj5tm91/labo'] == 'TDR_+'){
                     inf_5_a.tdr_plus = inf_5_a.tdr_plus+1 || 1;
@@ -211,16 +242,11 @@ var common = {
                      inf_15_a.premier_contact = inf_15_a.premier_contact+1 || 1;
                    }
                   
-                    inf_15_a.symptom_general = [];
-                    inf_15_a.diagnostic = [];
                     common.sGeneral(key,inf_15_a.symptom_general);
-                    var p = 0;
+                    
                     p = common.diagnostic(key,inf_15_a.diagnostic);
 
                     inf_15_a.palus_count = inf_15_a.palus_count + p | 0;
-
-                    inf_15_a.tdr_suspect = 0;
-                    inf_15_a.tdr_confirme = 0;
 
                   if(key['group_cj5tm91/labo'] == 'TDR_+'){
                     inf_15_a.tdr_plus = inf_15_a.tdr_plus+1 || 1;
@@ -243,10 +269,8 @@ var common = {
                         inf_20_a.premier_contact = inf_20_a.premier_contact+1 || 1;
                     }
                     
-                    inf_20_a.symptom_general = [];
-                    inf_20_a.diagnostic = [];
                     common.sGeneral(key,inf_20_a.symptom_general);
-                    var p = 0;
+                    
                     p = common.diagnostic(key,inf_20_a.diagnostic);
 
                     inf_20_a.palus_count = inf_20_a.palus_count + p | 0;
@@ -275,16 +299,11 @@ var common = {
                         inf_25_a.premier_contact = inf_25_a.premier_contact+1 || 1;
                     }
                     
-                    inf_25_a.symptom_general = [];
-                    inf_25_a.diagnostic = [];
                     common.sGeneral(key,inf_25_a.symptom_general);
-                    var p = 0;
+                    
                     p = common.diagnostic(key,inf_25_a.diagnostic);
 
                     inf_25_a.palus_count = inf_25_a.palus_count + p | 0;
-
-                    inf_25_a.tdr_suspect = 0;
-                    inf_25_a.tdr_confirme = 0;
 
                   if(key['group_cj5tm91/labo'] == 'TDR_+'){
                     inf_25_a.tdr_plus = inf_25_a.tdr_plus+1 || 1;
@@ -307,16 +326,11 @@ var common = {
                         inf_50_a.premier_contact = inf_50_a.premier_contact+1 || 1;
                     }
                     
-                    inf_50_a.symptom_general = [];
-                    inf_50_a.diagnostic = [];
                     common.sGeneral(key,inf_50_a.symptom_general);
-                    var p = 0;
+                    
                     p = common.diagnostic(key,inf_50_a.diagnostic);
 
                     inf_50_a.palus_count = inf_50_a.palus_count + p | 0;
-
-                    inf_50_a.tdr_suspect = 0;
-                    inf_50_a.tdr_confirme = 0;
 
                   if(key['group_cj5tm91/labo'] == 'TDR_+'){
                     inf_50_a.tdr_plus = inf_50_a.tdr_plus+1 || 1;
@@ -339,16 +353,11 @@ var common = {
                         inf_60_a.premier_contact = inf_60_a.premier_contact+1 || 1;
                     }
                     
-                    inf_60_a.symptom_general = [];
-                    inf_60_a.diagnostic = [];
                     common.sGeneral(key,inf_60_a.symptom_general);
-                    var p = 0;
+                    
                     p = common.diagnostic(key,inf_60_a.diagnostic);
 
                     inf_60_a.palus_count = inf_60_a.palus_count + p | 0;
-
-                    inf_60_a.tdr_suspect = 0;
-                    inf_60_a.tdr_confirme = 0;
 
                   if(key['group_cj5tm91/labo'] == 'TDR_+'){
                     inf_60_a.tdr_plus = inf_60_a.tdr_plus+1 || 1;
@@ -371,16 +380,11 @@ var common = {
                         sup_60_a.premier_contact = sup_60_a.premier_contact+1 || 1;
                     }
                     
-                    sup_60_a.symptom_general = [];
-                    sup_60_a.diagnostic = [];
                     common.sGeneral(key,sup_60_a.symptom_general);
-                    var p = 0;
+                    
                     p = common.diagnostic(key,sup_60_a.diagnostic);
 
                     sup_60_a.palus_count = sup_60_a.palus_count + p | 0;
-
-                    sup_60_a.tdr_suspect = 0;
-                    sup_60_a.tdr_confirme = 0;
 
                   if(key['group_cj5tm91/labo'] == 'TDR_+'){
                     sup_60_a.tdr_plus = sup_60_a.tdr_plus+1 || 1;
@@ -400,6 +404,7 @@ var common = {
           
         }
       });
+
       sumTotal = inf_12_m.count + 
                  inf_5_a.count + 
                  inf_15_a.count + 
@@ -482,7 +487,7 @@ function loadDataFromServer() {
       };
       $.ajax(settings).done(function(data){
         var newdonn = [];
-        var dateNew = '2016-10'.split('-');
+        var dateNew = '2016-09'.split('-');
         data.map(function(key){
             var dateObj = key['end'];
                 dateObj = dateObj.split("-");
@@ -492,7 +497,7 @@ function loadDataFromServer() {
         });
 
         dateNew = new Date();
-        dateNew = dateNew.getFullYear()+'-'+(dateNew.getMonth()-1);
+        dateNew = dateNew.getFullYear()+'-'+(dateNew.getMonth()-2);
         var db_date;
         //newdonn = common.dateFilter(newdonn,dateNew);
         var nom_des_localites = ['Timbi Tounni Centre','Hôrè Wouri','Bendékouré','Diaga','Saran','Wansan','Djongassi','Péllel_Bantan','Kothyou','total'];
@@ -520,66 +525,67 @@ function loadDataFromServer() {
             donnee.moins_de_60_ans = common.totals(newdonne,'registre_de_consultation')[9];
             donnee.plus_de_60_ans = common.totals(newdonne,'registre_de_consultation')[10];
         
+            if(newdonne.length > 0){
+                $.ajax({
+                    type: "POST",
+                    url: "./php/process.php",
+                    data:{ 
+                        //donnees de pour la table localite
+                        localite_name: localit || '',
+                        Mois_localite: db_date,
+                        NB_ACC: donnee.NB_ACC,
+                        nb_consultation: donnee.NB_REG_CONSULT || 0,
+                        nb_tdr_moins:donnee.moins_de_12_mois.tdr_moins + donnee.moins_de_5_ans.tdr_moins + donnee.moins_de_15_ans.tdr_moins +
+                                    donnee.moins_de_20_ans.tdr_moins + donnee.moins_de_25_ans.tdr_moins + donnee.moins_de_50_ans.tdr_moins +
+                                    donnee.moins_de_60_ans.tdr_moins + donnee.plus_de_60_ans.tdr_moins || 0,
+                        nb_tdr_plus: donnee.moins_de_12_mois.tdr_plus + donnee.moins_de_5_ans.tdr_plus + donnee.moins_de_15_ans.tdr_plus +
+                                    donnee.moins_de_20_ans.tdr_plus + donnee.moins_de_25_ans.tdr_plus + donnee.moins_de_50_ans.tdr_plus +
+                                    donnee.moins_de_60_ans.tdr_plus + donnee.plus_de_60_ans.tdr_plus || 0,
+                        nb_tdr_suspect: donnee.moins_de_12_mois.tdr_suspect + donnee.moins_de_5_ans.tdr_suspect + donnee.moins_de_15_ans.tdr_suspect +
+                                    donnee.moins_de_20_ans.tdr_suspect + donnee.moins_de_25_ans.tdr_suspect + donnee.moins_de_50_ans.tdr_suspect +
+                                    donnee.moins_de_60_ans.tdr_suspect + donnee.plus_de_60_ans.tdr_suspect || 0,
+                        nb_tdr_confirme : donnee.moins_de_12_mois.tdr_confirme + donnee.moins_de_5_ans.tdr_confirme + donnee.moins_de_15_ans.tdr_confirme +
+                                    donnee.moins_de_20_ans.tdr_confirme + donnee.moins_de_25_ans.tdr_confirme + donnee.moins_de_50_ans.tdr_confirme +
+                                    donnee.moins_de_60_ans.tdr_confirme + donnee.plus_de_60_ans.tdr_confirme || 0,
+                        medicaments : JSON.stringify(donnee.MEDICAMENTS),
 
+                        //donnees pour la tables moins_de_11_mois
+                        nb_maladies_12_m: common.maladiesList(donnee.moins_de_12_mois.diagnostic),
+                        nb_consult_12_m: donnee.moins_de_12_mois.count || 0,
+                        
+                        //donnees pour la tables moins_de_5_ans
+                        nb_maladies_5_a: common.maladiesList(donnee.moins_de_5_ans.diagnostic),
+                        nb_consult_5_a: donnee.moins_de_5_ans.count || 0,
 
-            $.ajax({
-                type: "POST",
-                url: "./php/process.php",
-                data:{ 
-                    //donnees de pour la table localite
-                    localite_name: localit || '',
-                    Mois_localite: db_date,
-                    NB_ACC: donnee.NB_ACC,
-                    nb_consultation: donnee.NB_REG_CONSULT || 0,
-                    nb_tdr_moins:donnee.moins_de_12_mois.tdr_moins + donnee.moins_de_5_ans.tdr_moins + donnee.moins_de_15_ans.tdr_moins +
-                                donnee.moins_de_20_ans.tdr_moins + donnee.moins_de_25_ans.tdr_moins + donnee.moins_de_50_ans.tdr_moins +
-                                donnee.moins_de_60_ans.tdr_moins + donnee.plus_de_60_ans.tdr_moins || 0,
-                    nb_tdr_plus: donnee.moins_de_12_mois.tdr_plus + donnee.moins_de_5_ans.tdr_plus + donnee.moins_de_15_ans.tdr_plus +
-                                donnee.moins_de_20_ans.tdr_plus + donnee.moins_de_25_ans.tdr_plus + donnee.moins_de_50_ans.tdr_plus +
-                                donnee.moins_de_60_ans.tdr_plus + donnee.plus_de_60_ans.tdr_plus || 0,
-                    nb_tdr_suspect: donnee.moins_de_12_mois.tdr_suspect + donnee.moins_de_5_ans.tdr_suspect + donnee.moins_de_15_ans.tdr_suspect +
-                                donnee.moins_de_20_ans.tdr_suspect + donnee.moins_de_25_ans.tdr_suspect + donnee.moins_de_50_ans.tdr_suspect +
-                                donnee.moins_de_60_ans.tdr_suspect + donnee.plus_de_60_ans.tdr_suspect || 0,
-                    nb_tdr_confirme : donnee.moins_de_12_mois.tdr_confirme + donnee.moins_de_5_ans.tdr_confirme + donnee.moins_de_15_ans.tdr_confirme +
-                                donnee.moins_de_20_ans.tdr_confirme + donnee.moins_de_25_ans.tdr_confirme + donnee.moins_de_50_ans.tdr_confirme +
-                                donnee.moins_de_60_ans.tdr_confirme + donnee.plus_de_60_ans.tdr_confirme || 0,
+                        //donnees pour la tables moins_de_15_ans
+                        nb_maladies_15_a: common.maladiesList(donnee.moins_de_15_ans.diagnostic),
+                        nb_consult_15_a: donnee.moins_de_15_ans.count || 0,
 
-                    //donnees pour la tables moins_de_11_mois
-                    nb_maladies_12_m: common.maladiesList(donnee.moins_de_12_mois.diagnostic || []),
-                    nb_consult_12_m: donnee.moins_de_12_mois.count || 0,
+                        //donnees pour la tables moins_de_20_ans
+                        nb_maladies_20_a: common.maladiesList(donnee.moins_de_20_ans.diagnostic),
+                        nb_consult_20_a: donnee.moins_de_20_ans.count || 0,
 
-                    //donnees pour la tables moins_de_5_ans
-                    nb_maladies_5_a: common.maladiesList(donnee.moins_de_5_ans.diagnostic || []),
-                    nb_consult_5_a: donnee.moins_de_5_ans.count || 0,
+                        //donnees pour la tables moins_de_25_ans
+                        nb_maladies_25_a: common.maladiesList(donnee.moins_de_25_ans.diagnostic),
+                        nb_consult_25_a: donnee.moins_de_25_ans.count || 0,
 
-                    //donnees pour la tables moins_de_15_ans
-                    nb_maladies_15_a: common.maladiesList(donnee.moins_de_15_ans.diagnostic || []),
-                    nb_consult_15_a: donnee.moins_de_15_ans.count || 0,
+                        //donnees pour la tables moins_de_50_ans
+                        nb_maladies_50_a: common.maladiesList(donnee.moins_de_50_ans.diagnostic),
+                        nb_consult_50_a: donnee.moins_de_50_ans.count || 0,
 
-                    //donnees pour la tables moins_de_20_ans
-                    nb_maladies_20_a: common.maladiesList(donnee.moins_de_20_ans.diagnostic || []),
-                    nb_consult_20_a: donnee.moins_de_20_ans.count || 0,
+                        //donnees pour la tables moins_de_60_ans
+                        nb_maladies_60_a: common.maladiesList(donnee.moins_de_60_ans.diagnostic),
+                        nb_consult_60_a: donnee.moins_de_60_ans.count || 0,
 
-                    //donnees pour la tables moins_de_25_ans
-                    nb_maladies_25_a: common.maladiesList(donnee.moins_de_25_ans.diagnostic || []),
-                    nb_consult_25_a: donnee.moins_de_25_ans.count || 0,
-
-                    //donnees pour la tables moins_de_50_ans
-                    nb_maladies_50_a: common.maladiesList(donnee.moins_de_50_ans.diagnostic || []),
-                    nb_consult_50_a: donnee.moins_de_50_ans.count || 0,
-
-                    //donnees pour la tables moins_de_60_ans
-                    nb_maladies_60_a: common.maladiesList(donnee.moins_de_60_ans.diagnostic || []),
-                    nb_consult_60_a: donnee.moins_de_60_ans.count || 0,
-
-                    //donnees pour la tables plus_de_60_ans
-                    nb_maladies_plus_60_a: common.maladiesList(donnee.plus_de_60_ans.diagnostic || []),
-                    nb_consult_plus_60_a: donnee.plus_de_60_ans.count || 0,
-                },
-                success:function(d){
-                    //console.log(d);
-                }
-            });
+                        //donnees pour la tables plus_de_60_ans
+                        nb_maladies_plus_60_a: common.maladiesList(donnee.plus_de_60_ans.diagnostic),
+                        nb_consult_plus_60_a: donnee.plus_de_60_ans.count || 0,
+                    },
+                    success:function(d){
+                        //console.log(d);
+                    }
+                });
+            }
 
        });
         console.log("----------------------------------------");

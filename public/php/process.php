@@ -13,6 +13,7 @@
     $nb_tdr_plus = $_POST['nb_tdr_plus'];
     $nb_tdr_suspect = $_POST['nb_tdr_suspect'];
     $nb_tdr_confirme = $_POST['nb_tdr_confirme'];
+    $medicaments = $_POST['medicaments'];
 
     //donnees pour la tables moins_de_11_mois
     $nb_maladies_12_m = $_POST['nb_maladies_12_m'];
@@ -53,8 +54,8 @@
 
         if($localite_name != 'total'){
             // insertion donnees de pour la table localite
-            $insert_localite = $bdd->prepare('INSERT INTO localite(localite_name,Mois_localite,nb_consultation,NB_ACC,nb_tdr_moins,nb_tdr_plus,nb_tdr_suspect,nb_tdr_confirme) 
-                            VALUES(:localite_name,:Mois_localite,:nb_consultation,:NB_ACC,:nb_tdr_moins,:nb_tdr_plus,:nb_tdr_suspect,:nb_tdr_confirme)
+            $insert_localite = $bdd->prepare('INSERT INTO localite(localite_name,Mois_localite,nb_consultation,NB_ACC,nb_tdr_moins,nb_tdr_plus,nb_tdr_suspect,nb_tdr_confirme,medicaments) 
+                            VALUES(:localite_name,:Mois_localite,:nb_consultation,:NB_ACC,:nb_tdr_moins,:nb_tdr_plus,:nb_tdr_suspect,:nb_tdr_confirme,:medicaments)
                         ');
             $insert_localite->execute(array('localite_name' => $localite_name,
                         'Mois_localite' => $Mois_localite,
@@ -63,7 +64,8 @@
                         'nb_tdr_moins' => $nb_tdr_moins,
                         'nb_tdr_plus' => $nb_tdr_plus,
                         'nb_tdr_suspect' => $nb_tdr_suspect,
-                        'nb_tdr_confirme' => $nb_tdr_confirme
+                        'nb_tdr_confirme' => $nb_tdr_confirme,
+                        'medicaments' => $medicaments
                 ));
 
             $local_id = $bdd->lastInsertId();

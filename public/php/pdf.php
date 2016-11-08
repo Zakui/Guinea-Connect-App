@@ -11,7 +11,7 @@
                          'Autres maladies des yeux','Ecoulement vaginale','Ecoulement Urétral','Douleur abdominale','Ulcération Genitale Femmes',
                          'Ulcération Genitale Hommes','Infection Sexuallement transmissible','Maladie Urinaire non IST','Maladie Gyneco Non IST',
                          'Gale','Autre Mal Dermatologiques','Fracture','Traumatisme Cranien','Brulure','Autre traumatisme','La gastrite',
-                         'Appendicites','Abdomen Aigu','Hernies','Occlusions','Autre pathologies digestives',"L’hypertension Artérielle",
+                         'Appendicites','Abdomen Aigu','Hernies','Occlusions','Autre pathologies digestives','L’hypertension Artérielle',
                          'Autres mal Cardio vasculaires','RAA','Maladies ORL','Autres mal articulaire','Carie Dentaire','Autre mal Bouche dents',
                          'Maladies mentales','Mal Neurologiques','Morsure de serpent','Autre','Tetanos neo natal','La paralysie Flasque Aigue',
                          'Poliomyélite','Rougeole','La diarrhée sanglante','La Méningite','Cholera','Fièvre Jaune','Dracunculose',
@@ -20,25 +20,47 @@
                          'Chancre','Décharge du pénis','Dermatite','Dermatite de la tete','Douleur corporelle','Douleur destomac','Douleur musculaire',
                          'Fiévre','Infection respiratoire aigue','Mal au dos','Mal de Tete','Oreillons','Pharyngite','La pneumonie','Le rhume','Rubéole',
                          'Saignements Vaginaux','Syphilis','Varicelle','Vomissement');
-
-    $pdf_req_localite = $bdd->prepare("SELECT * FROM localite WHERE localite_name LIKE :locality AND Mois_localite LIKE :local_date");
-    $pdf_req_localite->execute(array(
-        'locality' => $local_name,
-        'local_date' => $local_dates
-    ));
+    
+    if($local_name == 'total'){
+        $pdf_req_localite = $bdd->prepare("SELECT * FROM synthese_mois WHERE Mois_localite LIKE :local_date");
+        $pdf_req_localite->execute(array(
+            'local_date' => $local_dates
+        ));
+    }else{
+        $pdf_req_localite = $bdd->prepare("SELECT * FROM localite WHERE localite_name LIKE :locality AND Mois_localite LIKE :local_date");
+        $pdf_req_localite->execute(array(
+            'locality' => $local_name,
+            'local_date' => $local_dates
+        ));
+    }
     if($pdf_req_localite->rowCount() > 0){
         $rows_localite = $pdf_req_localite->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($rows_localite as $row){
-            $id_localite = $row['Id_localite'];
-            $localite_name = $row['localite_name'];
-            $Mois_localite = $row['Mois_localite'];
-            $nb_consultation = $row['nb_consultation'];
-            $NB_ACC = $row['NB_ACC'];
-            $nb_tdr_moins = $row['nb_tdr_moins'];
-            $nb_tdr_plus = $row['nb_tdr_plus'];
-            $nb_tdr_suspect = $row['nb_tdr_suspect'];
-            $nb_tdr_confirme = $row['nb_tdr_confirme'];
+        if($local_name == 'total'){
+            foreach ($rows_localite as $row){
+                $id_localite = $row['id_synthese_mois'];
+                $Mois_localite = $row['Mois_localite'];
+                $nb_consultation = $row['nb_consultation'];
+                $NB_ACC = $row['NB_ACC'];
+                $nb_tdr_moins = $row['nb_tdr_moins'];
+                $nb_tdr_plus = $row['nb_tdr_plus'];
+                $nb_tdr_suspect = $row['nb_tdr_suspect'];
+                $nb_tdr_confirme = $row['nb_tdr_confirme'];
+            }
+        }else{
+            foreach ($rows_localite as $row){
+                $id_localite = $row['Id_localite'];
+                $localite_name = $row['localite_name'];
+                $Mois_localite = $row['Mois_localite'];
+                $nb_consultation = $row['nb_consultation'];
+                $NB_ACC = $row['NB_ACC'];
+                $nb_tdr_moins = $row['nb_tdr_moins'];
+                $nb_tdr_plus = $row['nb_tdr_plus'];
+                $nb_tdr_suspect = $row['nb_tdr_suspect'];
+                $nb_tdr_confirme = $row['nb_tdr_confirme'];
+                $medicaments = $row['medicaments'];
+            }
         }
+        
         //recuperation des donnes de moins_de_11_mois
         $pdf_req_11_mois = $bdd->prepare("SELECT * FROM moins_de_11_mois WHERE id_localite LIKE :localID");
         $pdf_req_11_mois->execute(array(
@@ -153,7 +175,11 @@ class PDF extends FPDF{
     {
         $this->SetFont('Arial','B',13);
         $this->Cell(80);
-        $this->Cell(30,10,'rapport_'.$this->dates.'_de_la_localite_de_'.$this->local,0,0,'C');
+        if($this->local == 'total'){
+            $this->Cell(30,10,'rapport_cumuler_pour_la_mois_de_'.$this->dates,0,0,'C');
+        }else{
+            $this->Cell(30,10,'rapport_'.$this->dates.'_de_la_localite_de_'.$this->local,0,0,'C');
+        }
         $this->Ln(20);
     }
     // Pied de page
@@ -243,8 +269,8 @@ class PDF extends FPDF{
         $this->Cell(0,6,"Tableau naissance ");
         $this->Ln();
         $this->SetFont('Times','',12);
-        $this->Cell(120,5,"Nombre de naissance ",1);
-        $this->Cell(30,5,$nb,1,0,'R');
+        $this->Cell(90,5,"Nombre de naissance ",1);
+        $this->Cell(14,5,$nb,1,0,'R');
         $this->Ln();
         $this->Ln();
     }
@@ -294,17 +320,17 @@ class PDF extends FPDF{
         $this->Cell(0,6,"Tableau de Paludisme");
         $this->Ln();
         $this->SetFont('Times','',12);
-        $this->Cell(120,5,"Nombre de supect de paludisme ",1);
-        $this->Cell(30,5,$nb_susp,1,0,'R');
+        $this->Cell(140,5,"Nombre de supect de paludisme ",1);
+        $this->Cell(14,5,$nb_susp,1,0,'R');
         $this->Ln();
-        $this->Cell(120,5,utf8_decode("Nombre de cas de paludisme testés"),1);
-        $this->Cell(30,5,$nb_tdr_moins + $nb_tdr_plus,1,0,'R');
+        $this->Cell(140,5,utf8_decode("Nombre de cas de paludisme testés"),1);
+        $this->Cell(14,5,$nb_tdr_moins + $nb_tdr_plus,1,0,'R');
         $this->Ln();
-        $this->Cell(120,5,"Nombre de cas de TDR+",1);
-        $this->Cell(30,5,$nb_tdr_plus,1,0,'R');
+        $this->Cell(140,5,"Nombre de cas de TDR+",1);
+        $this->Cell(14,5,$nb_tdr_plus,1,0,'R');
         $this->Ln();
-        $this->Cell(120,5,utf8_decode("Nombre de cas de paludisme traités (confirmé)"),1);
-        $this->Cell(30,5,$nb_traite,1,0,'R');
+        $this->Cell(140,5,utf8_decode("Nombre de cas de paludisme traités (confirmé)"),1);
+        $this->Cell(14,5,$nb_traite,1,0,'R');
         $this->Ln();
         $this->Ln();
     }
@@ -347,6 +373,7 @@ class PDF extends FPDF{
 
         $this->Ln();
         $itera = 0;
+        $totals = 0;
         foreach($lop1 as $k=>$v){
             $this->SetFont('Times','',10);
             $x_axis=$this->getx();
@@ -367,13 +394,45 @@ class PDF extends FPDF{
             $this->hcell(14,10,$x_axis,$lop7[$k]);
             $x_axis=$this->getx();
             $this->hcell(14,10,$x_axis,$lop8[$k]);
-             $this->SetFont('Times','B',13);
+            $this->SetFont('Times','B',13);
             $x_axis=$this->getx();
-            $this->hcell(14,10,$x_axis,$lop1[$k]+$lop2[$k]+$lop3[$k]+$lop4[$k]+$lop5[$k]+$lop6[$k]+$lop7[$k]+$lop8[$k]);
+            $somme = $lop1[$k]+$lop2[$k]+$lop3[$k]+$lop4[$k]+$lop5[$k]+$lop6[$k]+$lop7[$k]+$lop8[$k];
+            $this->hcell(14,10,$x_axis,$somme);
             $this->Ln();
             $itera +=1; 
+            $totals += $somme;
         }
-           
+        $this->SetFont('Times','B',13);
+        $x_axis=$this->getx();
+        $this->ecell(176,10,$x_axis,'Totals');
+        $x_axis=$this->getx();
+        $this->hcell(14,10,$x_axis,$totals);
+        $this->Ln();
+        $this->Ln();
+    }
+
+    //creer le tableau de consomation des medicaments
+    function medicament($med){
+        $don = json_decode($med);
+
+        $this->SetFont('Arial','',15);
+        $this->Cell(0,6,"Tableau de consomation des medicaments ");
+        $this->Ln();
+        $this->SetFont('Times','B',12);
+        $this->Cell(140,5,'Medicaments',1);
+        $this->Cell(20,5,'Type',1,0,'C',0);
+        $this->Cell(27,5,'Quantites',1,0,'C',0);
+        $this->Ln(); 
+
+        $this->SetFont('Times','',12);
+        foreach($don as $v){
+           $this->Cell(140,5,utf8_decode($v->nom),1);
+           $this->Cell(20,5,utf8_decode($v->types),1,0,'C',0);
+           $this->Cell(27,5,$v->quantite,1,0,'C',0);
+           $this->Ln(); 
+        }
+        $this->Ln(); 
+
     }
 
 
@@ -397,6 +456,9 @@ class PDF extends FPDF{
                     $nb_tdr_plus,
                     $nb_tdr_confirme
                     );
+    if($local_name != 'total'){
+        $pdf->medicament($medicaments);
+    }
     $pdf->maladies($nb_maladie_11_mois,
                    $nb_maladie_5_ans,
                    $nb_maladie_15_ans,
@@ -407,6 +469,10 @@ class PDF extends FPDF{
                    $nb_maladie_plus_60_ans,
                    $maladiesName
                    );
-    $file_name = "rapport_".$local_dates."_de_la_localite_de_".$local_name.".pdf";
+    if($local_name != 'total'){
+        $file_name = "rapport_cumuler_pour_la_mois_de_".$local_dates.".pdf";
+    }else{
+        $file_name = "rapport_".$local_dates."_de_la_localite_de_".$local_name.".pdf";
+    }
     $pdf->Output($file_name, "I");
 ?>
