@@ -9,7 +9,70 @@
 body {
     font-family: "Lato",sans-serif;
 }
-
+.login-logo{
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+.login-contenu{
+    padding-top: 100px;
+    justify-content: center;
+    height: 100vh;
+    background-color: #3e4eb8;
+}
+.groupe-btn{
+    padding-bottom: 20px;
+}
+.partener{
+    padding-top: 20px;
+}
+.text-label{
+    font-family: Lato, sans-serif;
+    text-align:left;
+    height: 24px;
+    font-size: 14px;
+}
+.text-box{
+    width:100%;
+    box-sizing: border-box;
+    border-radius: 2px;
+    padding: 6px;
+    outline: none !important;
+    background-color: #f7f7f7;
+    border: 1px solid #c3c3c3;
+}
+.connexion{
+    border: 10px;
+    color: #fff;
+    outline: none;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    border-radius: 2px;
+    background-color: #00BC9E;
+}
+.partenaire{
+    border: 10px;
+    color: #fff;
+    font-size: 12px;
+    text-transform: lowercase;
+    font-variant: small-caps;
+    letter-spacing: 1px;
+}
+.conteneur{
+  text-align: center;
+  margin: auto;
+  max-width: 25%;
+  border-radius: 3px;
+  text-align: center;
+}
+.contenu{
+  padding: 1.5em;
+  margin: auto;
+  width: 313px;
+  height: 247px;
+  background-color: #ffffff;
+}
 .logo{
     -webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.16);
     -moz-box-shadow: 0 3px 10px rgba(0,0,0,0.16);

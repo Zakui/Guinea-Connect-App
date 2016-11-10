@@ -1,8 +1,11 @@
+<?php 
+    session_start();
+    $_SESSION['isConnected'] = false;
+    $_SESSION['login'] ="";
+ ?>
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -31,71 +34,91 @@
     <![endif]-->
 
 </head>
-
 <body>
+    <?php
+     
+        require_once('php/connection_bd.php');
     
-    <div id="wrapper" class="container">
-        <div class="row">
-            <div class="col-lg-3 col-sm-6 sidebar-nav">
-                <div class="logo">
-                    <a class="navbar-brand" href="#">
-                        <img src="static/images/guinea.png" alt="Guinea Connect" height="17.92" width="204.79">
+        if((isset($_POST['login']) && !empty($_POST['login'])) && 
+            (isset($_POST['passwd']) && !empty($_POST['passwd']))){
+        
+            $response = "";
+        
+    
+            $login = htmlspecialchars($_POST['login']);
+            $pass = htmlspecialchars($_POST['passwd']);
+        
+    try{ 
+    
+        $requete = $bdd->prepare('SELECT * FROM login 
+                                    WHERE login LIKE :login AND passwd LIKE :pass
+                                    LIMIT 1');
+        $requete->execute(array('login'=>$login,
+                                'pass'=>$pass,
+                        ));
+            
+        if($requete->rowCount() > 0){
+            //c'est bon 
+            $_SESSION['isConnected'] = true;
+            $_SESSION['login'] =$login;
+            $msg = false;
+            header('location:main.php');
+            
+            }else {
+            //login ou mot de passe errone
+            $msg = true;
+            $_SESSION['isConnected'] = false;
+            }
+        
+        
+        }catch(Exception $e){ 
+            die('Erreur : '.$e->getMessage());
+            echo json_encode ($response);
+        }
+        
+    }
+    ?>
+   <div class="login-contenu">
+        <div class="conteneur">
+            <?php	
+                // on teste s'il n'est pas connect avant d'afficher le formulaire
+                if(!isset($_SESSION['isConnected']) || $_SESSION['isConnected'] ==false){
+            ?>
+            <div class="login-logo">
+                <a href="/guinea-connect/public/">
+                    <img src="static/images/guinea.png" alt="Guinea Connect" height="27.89" width="250.28">
+                </a>
+            </div>
+            <div class="contenu">
+                <form action="index.php" method="post">
+                    <div class="groupe-btn">
+                        <div class="text-label">Nom d'utilisateur</div>
+                        <input class="text-box" name="login" type="text">
+                    </div>
+                    <div class="groupe-btn">
+                        <div class="text-label">Mot de passe</div>
+                        <input class="text-box" name="passwd" type="password">
+                    </div>
+                    <div class="groupe-btn">
+                        <button class="connexion">CONNEXION</button>
+                    </div>
+                </form>
+            </div>
+            <div class="partener">
+                <p class="partenaire">EN PARTENARIAT AVEC</p>
+                <div>
+                    <a href="http://www.ehealthafrica.org/">
+                        <img src="static/images/ehealth.png" alt="eHealth Africa" height="35.45" width="125.13">
                     </a>
                 </div>
-                <div class="liens">
-                    <div class="header-nav">STRUCTURE SANITAIRE</div>
-                    <hr/>
-                    <div class="structure-nav">
-                        <div class="panel panel-default">
-                            <div class="panel-heading rapport" data-toggle="collapse" data-target="#collapseElement" aria-expanded="true"><i class="chevron fa" ></i> Timbi touni</div>
-                            <div class="collapse in" id="collapseElement" aria-expanded="true">
-                            <div class="click colectivity-selected"><span class="fa fa-circle"></span> Rapport Cumuler</div>
-                                <div class="click colectivity"><span class=""></span> Péllel Bantan</div>
-                                <div class="click colectivity"><span class=""></span> Timbi Tounni Centre</div>
-                                <div class="click colectivity"><span class=""></span> Diaga</div>
-                                <div class="click colectivity"><span class=""></span> Djongassi</div>
-                                <div class="click colectivity"><span class=""></span> Hôre Wouri</div>
-                                <div class="click colectivity"><span class=""></span> Kothyou</div>
-                                <div class="click colectivity"><span class=""></span> Bendékouré</div>
-                                <div class="click colectivity"><span class=""></span> Saran</div>
-                                <div class="click colectivity"><span class=""></span> Wansan</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="deconnexion">
-                    Connecté en tant que <br/>
-                    <span>Nom d'utilisateur</span><br/>
-                    DÉCONNEXION <a href="#" style="text-decoration:none;"><span class="fa fa-sign-out"></span></a>
-                </div>
             </div>
-                       
-            <div class="col-lg-9 col-sm-6">
-                <div id="test">
-                </div>
-            </div>
+            <?php }
+                else {
+                    echo "vous etes deja connecter mon amie !";
+                    header('location:main.php');
+                }
+            ?>
         </div>
-    </div>
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/App.js"></script>
-    <script>
-        $(document).ready(function(){
-            $("#test").load("php/body_content.php",{ "locality": 'Rapport Cumuler' });
-        });
-        $(".click").click(function(){
-            $(".click").children("span").removeClass("fa");
-            $(".click").children("span").removeClass("fa-circle");
-            $(".click").removeClass("colectivity-selected");
-            $(".click").addClass("colectivity");
-            $(this).removeClass("colectivity");
-            $(this).addClass("colectivity-selected");
-            $(this).children("span").addClass("fa");
-            $(this).children("span").addClass("fa-circle");
-            
-            $("#test").load("php/body_content.php",{ "locality": $(this).text() });
-         
-        });
-        
-    </script>
+   </div>
 </body>
+</html>

@@ -176,7 +176,7 @@ class PDF extends FPDF{
         $this->SetFont('Arial','B',13);
         $this->Cell(80);
         if($this->local == 'total'){
-            $this->Cell(30,10,'rapport_cumuler_pour_la_mois_de_'.$this->dates,0,0,'C');
+            $this->Cell(30,10,'rapport_sous_prefecture_pour_le_mois_de_'.$this->dates,0,0,'C');
         }else{
             $this->Cell(30,10,'rapport_'.$this->dates.'_de_la_localite_de_'.$this->local,0,0,'C');
         }
@@ -351,7 +351,9 @@ class PDF extends FPDF{
 
         $this->SetFont('Times','B',12);
         $x_axis=$this->getx();
-        $this->fcell(64,10,$x_axis,"Tranches / Maladies");
+        $this->hcell(10,10,$x_axis,"Num");
+        $x_axis=$this->getx();
+        $this->fcell(58,10,$x_axis,"Tranches / Maladies");
         $x_axis=$this->getx();
         $this->hCell(14,10,$x_axis,'0-11 mois');
         $x_axis=$this->getx();
@@ -375,36 +377,40 @@ class PDF extends FPDF{
         $itera = 0;
         $totals = 0;
         foreach($lop1 as $k=>$v){
-            $this->SetFont('Times','',10);
-            $x_axis=$this->getx();
-            $this->ecell(64,10,$x_axis,utf8_decode($mal[$itera]));
-            $x_axis=$this->getx();
-            $this->hcell(14,10,$x_axis,$lop1[$k]);
-            $x_axis=$this->getx();
-            $this->hcell(14,10,$x_axis,$lop2[$k]);
-            $x_axis=$this->getx();
-            $this->hcell(14,10,$x_axis,$lop3[$k]);
-            $x_axis=$this->getx();
-            $this->hcell(14,10,$x_axis,$lop4[$k]);
-            $x_axis=$this->getx();
-            $this->hcell(14,10,$x_axis,$lop5[$k]);
-            $x_axis=$this->getx();
-            $this->hcell(14,10,$x_axis,$lop6[$k]);
-            $x_axis=$this->getx();
-            $this->hcell(14,10,$x_axis,$lop7[$k]);
-            $x_axis=$this->getx();
-            $this->hcell(14,10,$x_axis,$lop8[$k]);
-            $this->SetFont('Times','B',13);
-            $x_axis=$this->getx();
             $somme = $lop1[$k]+$lop2[$k]+$lop3[$k]+$lop4[$k]+$lop5[$k]+$lop6[$k]+$lop7[$k]+$lop8[$k];
-            $this->hcell(14,10,$x_axis,$somme);
-            $this->Ln();
-            $itera +=1; 
-            $totals += $somme;
+            if($somme > 0){
+                $this->SetFont('Times','',10);
+                $x_axis=$this->getx();
+                $this->hcell(10,10,$x_axis,$itera+1);
+                $x_axis=$this->getx();
+                $this->ecell(58,10,$x_axis,utf8_decode($mal[$itera]));
+                $x_axis=$this->getx();
+                $this->hcell(14,10,$x_axis,$lop1[$k]);
+                $x_axis=$this->getx();
+                $this->hcell(14,10,$x_axis,$lop2[$k]);
+                $x_axis=$this->getx();
+                $this->hcell(14,10,$x_axis,$lop3[$k]);
+                $x_axis=$this->getx();
+                $this->hcell(14,10,$x_axis,$lop4[$k]);
+                $x_axis=$this->getx();
+                $this->hcell(14,10,$x_axis,$lop5[$k]);
+                $x_axis=$this->getx();
+                $this->hcell(14,10,$x_axis,$lop6[$k]);
+                $x_axis=$this->getx();
+                $this->hcell(14,10,$x_axis,$lop7[$k]);
+                $x_axis=$this->getx();
+                $this->hcell(14,10,$x_axis,$lop8[$k]);
+                $this->SetFont('Times','B',13);
+                $x_axis=$this->getx();
+                $this->hcell(14,10,$x_axis,$somme);
+                $this->Ln();
+                $itera +=1; 
+                $totals += $somme;
+            }
         }
         $this->SetFont('Times','B',13);
         $x_axis=$this->getx();
-        $this->ecell(176,10,$x_axis,'Totals');
+        $this->ecell(180,10,$x_axis,'Totals');
         $x_axis=$this->getx();
         $this->hcell(14,10,$x_axis,$totals);
         $this->Ln();
@@ -435,12 +441,23 @@ class PDF extends FPDF{
 
     }
 
+    function entete(){
+        $this->Line(10, 45, 210-10, 45);
+        $this->Ln();
+        $this->Image('../static/images/guinea-logo.png',10,6,30);
+        $this->Ln();
+        $this->Line(10, 45, 210-10, 45);
+        $this->Line(10, 45.5, 210-10, 45.5);
+        $this->Ln();
+    }
+
 
 }
     $pdf = new PDF();
     $pdf->AliasNbPages();
     $pdf->setLocalDate(utf8_decode($local_name),utf8_decode($local_dates));
     $pdf->AddPage();
+    $pdf->entete();
     $pdf->nbNaissance($NB_ACC);
     $pdf->consultation($nb_consult_11_mois,
                        $nb_consult_5_ans,
@@ -474,5 +491,5 @@ class PDF extends FPDF{
     }else{
         $file_name = "rapport_".$local_dates."_de_la_localite_de_".$local_name.".pdf";
     }
-    $pdf->Output($file_name, "I");
+   $pdf->Output($file_name, "I");
 ?>

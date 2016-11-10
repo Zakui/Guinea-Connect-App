@@ -6,16 +6,16 @@
 
     
     $nom_des_localites =array(
-        'Timbi Tounni Centre' => 'Timbi Tounni Centre',
-        'Hôre Wouri' => 'Hôrè Wouri',
-        'Bendékouré' => 'Bendékouré',
-        'Diaga' => 'Diaga',
-        'Saran' => 'Saran',
-        'Wansan' => 'Wansan',
-        'Djongassi' => 'Djongassi',
-        'Péllel Bantan' => 'Péllel_Bantan',
-        'Kothyou' => 'Kothyou',
-        'Rapport Cumuler' => 'Globals'
+        'CS Timbi Tounni Centre' => 'Timbi Tounni Centre',
+        'PS Hôre Wouri' => 'Hôrè Wouri',
+        'PS Bendékouré' => 'Bendékouré',
+        'PS Diaga' => 'Diaga',
+        'PS Saran' => 'Saran',
+        'PS Wansan' => 'Wansan',
+        'PS Djongassi' => 'Djongassi',
+        'PS Péllel Bantan' => 'Péllel_Bantan',
+        'PS Kothyou' => 'Kothyou',
+        'Rapport Sous-Prefecture' => 'Globals'
         );
         $db_local = '';
         foreach ($nom_des_localites as $key=>$value) {
